@@ -20,19 +20,21 @@ class ClasseController extends Controller
     {
         // Validar la petició
         $validated = $request->validate([
-            'grup' => 'required|string|max:255',
-            'tutor' => 'required|string|max:255',
+            'grup' => 'required|string|max:255',  // Validar que 'grup' és obligatori
+            'tutor' => 'required|string|max:255', // Validar que 'tutor' és obligatori
         ]);
 
-        // Crear la classe
+        // Si la validació passa, crea la classe
         $classe = Classe::create([
             'grup' => $validated['grup'],
             'tutor' => $validated['tutor'],
         ]);
 
-        // Retornar la classe creada com a resposta JSON
+        // Retorna la resposta en format JSON
         return response()->json($classe, 201);
     }
+
+
 
     // Obtenir una classe específica amb els seus alumnes
     public function show($id)
