@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+    container_name: laravel_appgit branch -a
+
+    ports:
+      - "8000:80"  # Exposa el port 80 del contenidor al port 8000 de la màquina amfitriona
+    volumes:
+      - .:/var/www/html  # Monta el directori actual dins del contenidor
+    networks:
+      - laravel_network
+    depends_on:
+      - db  # El servei de l'aplicació depèn de la base de dades (MySQL)
+
+  db:
+    image: mysql:5.7
+    container_name: laravel_db
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: laravel
+      MYSQL_USER: user
+      MYSQL_PASSWORD: user_password
+    ports:
+      - "3306:3306"  # Exposa el port MySQL per poder accedir des de l'exterior
+    networks:
+      - laravel_network
+
+networks:
+  laravel_network:
+    driver: bridge
